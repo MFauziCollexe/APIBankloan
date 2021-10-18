@@ -43,7 +43,7 @@ namespace APIBankLoan.Models
         public string roleID { get; set; }
         [Column(TypeName = "varchar(255)", Order =15)]
         public string reqBy { get; set; }
-        [Column(TypeName = "varchar(255)", Order = 4)]
+        [Column(TypeName = "varchar(255)", Order = 16)]
         public int status { get; set; }
 
         [ForeignKey("RefID")]

@@ -10,5 +10,6 @@ namespace APIBankLoan.Models
         }
         public DbSet<BisInfoDetail> bisInfoDetails { get; set; }
         public DbSet<authorizers> Authorizers { get; set; }
+        public DbSet<Registration> Registrations { get; set; }
     }
 }
