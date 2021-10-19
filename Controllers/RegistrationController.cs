@@ -21,54 +21,52 @@ namespace APIBankLoan.Controllers
             _context = context;
         }
 
-        // GET: api/GeneralMessage
         [HttpGet]
-        public async Task<ActionResult<IEnumerable<Registration>>> GetGeneralMessages()
+        public async Task<ActionResult<IEnumerable<Registration>>> GetGeneralRegistration()
         {
             return await _context.Registrations.ToListAsync();
         }
 
         [HttpGet("{Email}")]
-        public async Task<ActionResult<Registration>> GetRegistration(string Email)
+        public async Task<ActionResult<IEnumerable<Registration>>> GetRegistration(string Email)
         {
-            var Registration = await _context.Registrations.FindAsync(Email);
-            if (Registration != null)
+            var regisTration = _context.Registrations.Where(x => x.Email == Email).ToList();
+            if (regisTration != null)
             {
-                var datetime = Datetime.Now();
-                return Registration;
+                return regisTration;
             }
             return NotFound();
-            
+
         }
 
-        [ProducesResponseType(200)]
-        [HttpPost]
-        public async Task<ActionResult<Registration>> PostRegistration(Registration Registration)
-        {
-            var RegistrationEmail = await _context.Registrations.FindAsync(Registration.Email.ToString());
-            if (RegistrationEmail != null){
-                _context.Registrations.Add(Registration);
-                try
-                {
-                    await _context.SaveChangesAsync();
-                    return Registration;
-                }
-                catch (DbUpdateException)
-                {
-                    if (RegistrationExists(Registration.Email))
-                    {
-                        return Conflict();
-                    }
-                    else
-                    {
-                        throw;
-                    }
-                }
-            }
+        // [ProducesResponseType(200)]
+        // [HttpPost]
+        // public async Task<ActionResult<Registration>> PostRegistration(Registration Registration)
+        // {
+        //     var RegistrationEmail = await _context.Registrations.FindAsync(Registration.Email.ToString());
+        //     if (RegistrationEmail != null){
+        //         _context.Registrations.Add(Registration);
+        //         try
+        //         {
+        //             await _context.SaveChangesAsync();
+        //             return Registration;
+        //         }
+        //         catch (DbUpdateException)
+        //         {
+        //             if (RegistrationExists(Registration.Email))
+        //             {
+        //                 return Conflict();
+        //             }
+        //             else
+        //             {
+        //                 throw;
+        //             }
+        //         }
+        //     }
 
-            return NotFound();
+        //     return NotFound();
             
-        }
+        // }
 
         private bool RegistrationExists(string email)
         {
