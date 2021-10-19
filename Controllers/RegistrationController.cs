@@ -34,9 +34,11 @@ namespace APIBankLoan.Controllers
             var Registration = await _context.Registrations.FindAsync(Email);
             if (Registration != null)
             {
+                var datetime = Datetime.Now();
                 return Registration;
             }
             return NotFound();
+            
         }
 
         [ProducesResponseType(200)]
